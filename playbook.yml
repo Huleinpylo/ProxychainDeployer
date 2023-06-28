@@ -1,0 +1,12 @@
+- name: Install and configure reverse proxy
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install socat package
+      apt:
+        name: socat
+        state: present
+
+    - name: Configure reverse proxy
+      command: socat TCP-LISTEN:9666,fork SOCKS4A:localhost:%h:%p,socksport=1080
